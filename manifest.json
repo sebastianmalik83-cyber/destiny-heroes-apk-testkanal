@@ -9,11 +9,11 @@
   "patch": {
     "schema": 1,
     "base_version": "0.0.0.74",
-    "patch_version": 4,
-    "requires_patch_version": 3,
-    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000004.pck",
-    "size_bytes": 313916,
-    "sha256": "f8b35e57deaf05d6f79f817c7de6db667c71dd1dc91176a037df142beeb202c2",
-    "notes": "Nach sicher installiertem Update schliesst das Spiel kuenftig automatisch. PCK 4 einmalig manuell neu starten."
+    "patch_version": 5,
+    "requires_patch_version": 4,
+    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000005.pck",
+    "size_bytes": 338572,
+    "sha256": "781f77439c87f845f2d5b839c45ed03dfe0596ceae44a3d520f83a461b89b334",
+    "notes": "E1.2: acht Einstellungsseiten, D1.0-Kartendetails und Feuer-FX. Nach dem geprüften Update schließt das Spiel; bitte erneut öffnen."
   }
 }
