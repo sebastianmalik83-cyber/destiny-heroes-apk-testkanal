@@ -9,11 +9,11 @@
   "patch": {
     "schema": 1,
     "base_version": "0.0.0.74",
-    "patch_version": 1,
-    "requires_patch_version": 0,
-    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000001.pck",
-    "size_bytes": 2252,
-    "sha256": "65de3713f73cb304ffddcb54342139d860ac879756c270b0f425f50b0c2cc6ac",
-    "notes": "2,3 kB reiner Testmarker, keine Grafiken und keine Spieländerungen."
+    "patch_version": 2,
+    "requires_patch_version": 1,
+    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000002.pck",
+    "size_bytes": 309980,
+    "sha256": "bbbaa66f16b8bff45f28fae09fcd6541f73b0bb1aecbf8087c1d2cbf45e5248c",
+    "notes": "Karten-Detailansichten D1.0: kompilierter Testcode, ohne Originalgrafiken oder lesbaren Quellcode."
   }
 }
