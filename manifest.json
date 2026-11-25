@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "channel": "test",
+  "version": "0.0.0.72",
+  "apk_url": "https://github.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/releases/download/update-test-0.0.0.72-20261125/Destiny_Heroes_Update_Test_0.0.0.72.apk",
+  "sha256": "46b60dc2c819b20795b63e4b313cef2597a95e9b0ecaf37359b9b3aeda2f5b8f",
+  "size_bytes": 246503487,
+  "notes": "Erste separate Android-Testversion mit Updatepruefung; bestehende Apps bleiben unveraendert."
+}
