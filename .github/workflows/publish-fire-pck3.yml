@@ -1,0 +1,74 @@
+name: Destiny Heroes - freigegebenes Feuer-Test-PCK v3 veroeffentlichen
+
+on:
+  push:
+    branches:
+      - pck-no-assets-test-20261125
+    paths:
+      - patches/patch-000003.pck.b64
+
+permissions:
+  contents: write
+
+concurrency:
+  group: destiny-heroes-pck-public-v3
+  cancel-in-progress: false
+
+jobs:
+  publish-compiled-fire-pck:
+    if: github.repository == 'sebastianmalik83-cyber/destiny-heroes-apk-testkanal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Freigegebenen oeffentlichen Testzweig laden
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Vorhandene D1.0-Version und reinen Bytecode pruefen
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f patches/patch-000003.pck.b64 ]; then
+            echo "Keine freigegebene Eingabe mehr vorhanden."
+            exit 0
+          fi
+          test "$(jq -r '.patch.patch_version' manifest.json)" = "2"
+          test "$(jq -r '.patch.base_version' manifest.json)" = "0.0.0.74"
+          test "$(jq -r '.patch.sha256' manifest.json)" = "bbbaa66f16b8bff45f28fae09fcd6541f73b0bb1aecbf8087c1d2cbf45e5248c"
+          test -s patches/patch-000002.pck
+          echo "bbbaa66f16b8bff45f28fae09fcd6541f73b0bb1aecbf8087c1d2cbf45e5248c  patches/patch-000002.pck" | sha256sum --check -
+          base64 --decode patches/patch-000003.pck.b64 > patches/patch-000003.pck
+          test "$(stat -c '%s' patches/patch-000003.pck)" = "7748"
+          echo "13c87f6accfbf0a0a3fe2afbbbbc09fe435eba264e35deda888d38b907c5427a  patches/patch-000003.pck" | sha256sum --check -
+          test "$(od -An -tx1 -N4 patches/patch-000003.pck | tr -d ' \n')" = "47445043"
+          printf '%s  %s\n' "13c87f6accfbf0a0a3fe2afbbbbc09fe435eba264e35deda888d38b907c5427a" "patch-000003.pck" > patches/patch-000003.sha256
+
+      - name: Feuer-Update erst nach erfolgreicher Pruefung freischalten
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f patches/patch-000003.pck.b64 ]; then
+            exit 0
+          fi
+          jq \
+            --arg url "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000003.pck" \
+            --arg sha "13c87f6accfbf0a0a3fe2afbbbbc09fe435eba264e35deda888d38b907c5427a" \
+            --argjson bytes 7748 \
+            '.patch = {
+                "schema": 1,
+                "base_version": "0.0.0.74",
+                "patch_version": 3,
+                "requires_patch_version": 2,
+                "url": $url,
+                "size_bytes": $bytes,
+                "sha256": $sha,
+                "notes": "Feuerfaehigkeit BRAND: kompilierter Effekt-Test, ohne Originalgrafiken oder lesbaren Quellcode."
+              }' manifest.json > manifest.updated.json
+          mv manifest.updated.json manifest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -- patches/patch-000003.pck.b64
+          git add -- manifest.json patches/patch-000003.pck patches/patch-000003.sha256
+          git commit -m "Feuer-FX: kompilierte PCK v3 im Testkanal freigeben"
+          git push origin HEAD:refs/heads/pck-no-assets-test-20261125
