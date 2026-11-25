@@ -5,5 +5,15 @@
   "apk_url": "https://github.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/releases/download/update-test-0.0.0.73-20261125/Destiny_Heroes_Update_Test_0.0.0.73.apk",
   "sha256": "d0b6d6770100bac89e23797ac5d726bc49ea2352d138b8830e9124e1135ec785",
   "size_bytes": 246503487,
-  "notes": "Nur Version 0.0.0.73 fuer den Android-In-App-Update-Test; Spielinhalt und Regeln unveraendert."
+  "notes": "Nur Version 0.0.0.73 fuer den Android-In-App-Update-Test; Spielinhalt und Regeln unveraendert.",
+  "patch": {
+    "schema": 1,
+    "base_version": "0.0.0.74",
+    "patch_version": 1,
+    "requires_patch_version": 0,
+    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000001.pck",
+    "size_bytes": 2252,
+    "sha256": "65de3713f73cb304ffddcb54342139d860ac879756c270b0f425f50b0c2cc6ac",
+    "notes": "2,3 kB reiner Testmarker, keine Grafiken und keine Spieländerungen."
+  }
 }
