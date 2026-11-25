@@ -1,0 +1,61 @@
+name: Destiny Heroes - freigegebenes D1.0 Test-PCK veröffentlichen
+on:
+  push:
+    branches:
+      - pck-no-assets-test-20261125
+    paths:
+      - patches/patch-000002.pck.b64
+
+permissions:
+  contents: write
+
+concurrency:
+  group: destiny-heroes-pck-public-v2
+  cancel-in-progress: false
+
+jobs:
+  publish-compiled-test-pck:
+    if: github.repository == 'sebastianmalik83-cyber/destiny-heroes-apk-testkanal'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Freigegebenen öffentlichen Testzweig laden
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Bytecode-only Test-PCK prüfen und bereitstellen
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f patches/patch-000002.pck.b64 ]; then
+            echo "Keine freigegebene Eingabe mehr vorhanden."
+            exit 0
+          fi
+          test "$(jq -r '.patch.patch_version' manifest.json)" = "1"
+          test "$(jq -r '.patch.base_version' manifest.json)" = "0.0.0.74"
+          base64 --decode patches/patch-000002.pck.b64 > patches/patch-000002.pck
+          test "$(stat -c '%s' patches/patch-000002.pck)" = "309980"
+          echo "bbbaa66f16b8bff45f28fae09fcd6541f73b0bb1aecbf8087c1d2cbf45e5248c  patches/patch-000002.pck" | sha256sum --check -
+          printf '%s  %s\n' "bbbaa66f16b8bff45f28fae09fcd6541f73b0bb1aecbf8087c1d2cbf45e5248c" "patch-000002.pck" > patches/patch-000002.sha256
+          jq \
+            --arg url "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000002.pck" \
+            --arg sha "bbbaa66f16b8bff45f28fae09fcd6541f73b0bb1aecbf8087c1d2cbf45e5248c" \
+            --argjson bytes 309980 \
+            '.patch = {
+                "schema": 1,
+                "base_version": "0.0.0.74",
+                "patch_version": 2,
+                "requires_patch_version": 1,
+                "url": $url,
+                "size_bytes": $bytes,
+                "sha256": $sha,
+                "notes": "Karten-Detailansichten D1.0: kompilierter Testcode, ohne Originalgrafiken oder lesbaren Quellcode."
+              }' manifest.json > manifest.updated.json
+          mv manifest.updated.json manifest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -- patches/patch-000002.pck.b64
+          git add -- manifest.json patches/patch-000002.pck patches/patch-000002.sha256
+          git commit -m "D1.0: kleines kompiliertes PCK v2 im Testkanal freigeben"
+          git push origin HEAD:refs/heads/pck-no-assets-test-20261125
