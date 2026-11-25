@@ -9,11 +9,11 @@
   "patch": {
     "schema": 1,
     "base_version": "0.0.0.74",
-    "patch_version": 3,
-    "requires_patch_version": 2,
-    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000003.pck",
-    "size_bytes": 7748,
-    "sha256": "13c87f6accfbf0a0a3fe2afbbbbc09fe435eba264e35deda888d38b907c5427a",
-    "notes": "Feuerfaehigkeit BRAND: kompilierter Effekt-Test, ohne Originalgrafiken oder lesbaren Quellcode."
+    "patch_version": 4,
+    "requires_patch_version": 3,
+    "url": "https://raw.githubusercontent.com/sebastianmalik83-cyber/destiny-heroes-apk-testkanal/pck-no-assets-test-20261125/patches/patch-000004.pck",
+    "size_bytes": 313916,
+    "sha256": "f8b35e57deaf05d6f79f817c7de6db667c71dd1dc91176a037df142beeb202c2",
+    "notes": "Nach sicher installiertem Update schliesst das Spiel kuenftig automatisch. PCK 4 einmalig manuell neu starten."
   }
 }
